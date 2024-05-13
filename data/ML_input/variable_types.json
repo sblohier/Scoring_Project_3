@@ -1,0 +1,25 @@
+{
+    "bool": [
+        "paperless_billing",
+        "internet_service",
+        "online_security",
+        "premium_tech_support",
+        "unlimited_data"
+    ],
+    "cat_num": [
+        "age_bins",
+        "family_size_bins",
+        "number_of_referrals_bins",
+        "total_of_services_add",
+        "tenure_in_months_bins"
+    ],
+    "cat": [
+        "contract",
+        "offer",
+        "payment_method",
+        "internet_type"
+    ],
+    "num": [
+        "monthly_charge"
+    ]
+}
