@@ -10,7 +10,7 @@ import seaborn as sns
 # Packages scikit-learn pour modélisation
 from sklearn.calibration import calibration_curve
 
-from plot_data_analyses import def_axe
+from src.data.plot_data_analyses import def_axe
 
 
 

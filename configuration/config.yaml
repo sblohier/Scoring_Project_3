@@ -1,0 +1,9 @@
+intermediate_data : df_telcom.csv
+train_folder : train
+eval_folder : eval
+output_folder  : ./data/output
+train : df_train.csv
+test : df_test.csv
+eval : df_eval.csv
+output : eval_df_telco_churn_status_code.csv
+seed : 42

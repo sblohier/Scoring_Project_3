@@ -5,6 +5,7 @@ import re
 import os
 from pathlib import Path
 import shutil
+import yaml
 
 # Package pour les tableaux et dataframe
 import numpy as np
@@ -12,6 +13,27 @@ import pandas as pd
 from pandas.errors import MergeError
 
 
+
+def import_yaml_config():
+    CONFIG_PATH = './configuration/config.yaml'
+
+    TRAIN_ML=""
+    TEST_ML=""
+    EVAL_ML=""
+    EVAL_OUTPUT = ""
+    config = {}
+    if os.path.exists(CONFIG_PATH):
+        with open(CONFIG_PATH, "r", encoding="utf-8") as stream:
+            config = yaml.safe_load(stream)
+            
+            # TRAIN_ML = config.get("train", "df_train.csv")
+            # TEST_ML = config.get("test", "df_test.csv")
+            # EVAL_OUTPUT = config.get("eval", "df_eval.csv")
+            # EVAL_ML = config.get("eval_output", "eval_df_telco_churn_status_code.csv")
+            # # TEST_FRACTION = config.get("test_fraction", .1)
+            # SEED = config.get("seed", 42)
+    return config #TRAIN_ML, TEST_ML, EVAL_ML, EVAL_OUTPUT, SEED
+ 
 
 def create_dir(path, dirname) :
     """Cette fonction permet de créer un sous-dossier
@@ -30,7 +52,7 @@ def create_dir(path, dirname) :
     return path + '/' + dirname
 
 
-def create_dir_tree () :
+def create_dir_tree (train_folder, eval_folder) :
     """Création d'une arborescence de dossier : 
         ./data/raw/train
                 /eval
@@ -46,14 +68,14 @@ def create_dir_tree () :
     paths.append(path_datadir_)
     for name in ["raw", "intermediate", "ML_input"] :
         path_namedir = create_dir(path_datadir_,name)
-        create_dir(path_namedir,"train")
-        create_dir(path_namedir,"eval")
+        create_dir(path_namedir,train_folder)
+        create_dir(path_namedir,eval_folder)
         paths.append(path_namedir)
     path_namedir = create_dir(path_datadir_,"output")
     return paths
 
 
-def move_csv (path_datadir_) :
+def move_csv (path_datadir_, train_folder, eval_folder) :
     """ Copie les fichiers *telco_customer*.csv dans :
          ./data/raw/train
                    /eval   
@@ -62,9 +84,28 @@ def move_csv (path_datadir_) :
     """
     for path in Path('./').rglob('*telco_customer*.csv'):
         rel_path= os.path.relpath(path)
-        new_path = os.path.relpath(path_datadir_ + '/raw/eval/' + path.name)
+        new_path = os.path.relpath(path_datadir_ + "/" + eval_folder + "/" + path.name)
         if rel_path.find("eval") == -1 :
-            new_path =   os.path.relpath(path_datadir_ + '/raw/train/' + path.name)
+            new_path =   os.path.relpath(path_datadir_ + "/" + train_folder + "/" + path.name)
+        if (rel_path == new_path) | (Path(new_path).is_file()):
+            print(rel_path)
+            print("Files already in place")
+        else :
+            shutil.copy(rel_path,new_path )
+            print(f"FILE {path.name} \n---> COPIED TO {new_path}")
+
+
+def move_var_json (path_datadir_) :
+    """ Copie les fichiers *telco_customer*.csv dans :
+         ./data/raw/train
+                   /eval   
+    Args:
+        path : le chemin du dossier 'data
+    """
+    for path in Path('./').rglob('variable_types*.json'):
+        rel_path= os.path.relpath(path)
+        new_path = os.path.relpath(path_datadir_  + "/" + path.name)
+        print(f"JSON {new_path}")
         if (rel_path == new_path) | (Path(new_path).is_file()):
             print(rel_path)
             print("Files already in place")
@@ -74,7 +115,7 @@ def move_csv (path_datadir_) :
 
 
 
-def read_merge_date (path_raw_data_, path_inter_data_) :
+def read_merge_date (path_raw_data_, path_inter_data_, filename_) :
     """ Récupère le path du dossier contenant les csv,
         Pour chaque fichier :
          * Création d'un dataframe
@@ -117,7 +158,7 @@ def read_merge_date (path_raw_data_, path_inter_data_) :
         print(f"Le df issu du merging contient {df.shape[0]} lignes et {df.shape[1]} variables.")
         dirup = os.path.dirname(os.path.dirname(os.path.dirname(path_raw_data_)))
         print(dirup)
-        df.to_csv(path_inter_data_+"/" + path_raw_data_.split("/")[-2]+'/df_telco.csv', index=False)
+        df.to_csv(path_inter_data_+"/" + path_raw_data_.split("/")[-2]+'/' + filename_, index=False)
         return df
     else :
         return print("Erreur pendant la fusion des dataframes, présence de doublons.")
@@ -138,4 +179,3 @@ def get_cols_by_type(json_obj) :
         for var_ in json_obj[key].keys():
             variables_type[var] += json_obj[key][var]
     return variables_type
-

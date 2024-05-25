@@ -35,7 +35,7 @@ def fit_model (preprocessor, model_name, model, params, X, y) :
                 ('classifier', model)])
     pipe.set_params(**params)
     pipe.fit(X, y)
-    pickle.dump(pipe, open(model_name + ".sav", 'wb'))
+    #pickle.dump(pipe, open(model_name + ".sav", 'wb'))
     return pipe
 
 

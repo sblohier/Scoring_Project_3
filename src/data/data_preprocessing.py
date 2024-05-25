@@ -15,9 +15,6 @@ from sklearn.impute import SimpleImputer
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import make_pipeline
 
-from plot_data_analyses import def_axe
-
-
 
 
 
@@ -42,74 +39,7 @@ def discretization_variables (df : pd.DataFrame, var,
 
 
 
-def plot_discretized_variable (df : pd.DataFrame, var, bins) :
-    """génère la visualisation de la variable continue (var) 
-    sous la forme d'un density plot et 
-    la  visualisation du résultat de sa discrétisation 
-    selon la plage d'intervalles bin
-
-    Args:
-        df : dataframe
-        var : le nom de la variable à discrétiser
-        bins : array des intervalles
-    """
-    # Création de la figure
-    fig, ax = plt.subplots(figsize=(6,4))
-
-    # Définition des intervalles de discrétisation
-    bins_ = [df[var].min()] + bins + [df[var].max()+1]
-
-    # Density plot de la variable continue
-    sns.kdeplot(ax = ax,data = df, x=var,  alpha=0.6,
-                fill=True,  legend=False, cut= 0,
-                color = "#CC226E")
-
-    # Histogramme de la variable discrétisée
-    ax2 = ax.twinx()
-    sns.histplot(ax = ax2, data=df, x=var, bins=bins_,stat = "frequency", color="#226ECC")
-
-    # Définition des axes
-    ax = def_axe(ax,f"{var}", 'Distribution')
-    ax2 = def_axe(ax,"", "")
-
-    # Définition du titre du graphique
-    ax.set_title(f"Distribution de la variable {var}"
-                 " continue et discrétisée - set d'entraînement",
-                 fontsize=10)
-    fig.show()
-
-
-
-def preprocessing_for_rfe (X, bool_cols, cat_cols, num_cols) :
-    """préprocessing des featuress pour RFE
-
-    Args:
-        X : dataframe des variables explicatives
-        bool_cols : le nom desvariables booléennes
-        cat_cols : le nom des variables catégorielles
-        num_cols : le nom des variables numériques
-
-    Returns:
-        X_dummies: le dataframe préprocessé
-    """
-    # On crée une copie de X_train
-    X_c = X.copy()
-
-    # Encodage manuel des variables booléennes
-    X_c[bool_cols] = X_c[bool_cols].apply(
-        lambda x : x.map({"Yes" : 1, "No" : 0}))
-
-    # Encodage one-hot des variables catégorielles textuelles
-    X_dummies = pd.get_dummies(X_c,  prefix_sep='__',  columns=cat_cols)
-
-    # Normalisation des variables numériques
-    rs = StandardScaler()
-    X_dummies[num_cols] = rs.fit_transform(X_dummies[num_cols])
-    return X_dummies
-
-
-
-def feature_engineering (df, services_) :
+def feature_engineering (df) :
     """fonction qui :
      - discrétise les variables :
     'age',"number_of_dependents","number_of_referrals", "tenure_in_months"
@@ -119,7 +49,6 @@ def feature_engineering (df, services_) :
 
     Args:
         df : dataframe 
-        services_ : la liste des services
 
     Returns:
         df: le dataframe avec les nouvelles variables
@@ -131,7 +60,12 @@ def feature_engineering (df, services_) :
     df_ = discretization_variables(df_, "family_size", [1.5,2.5,4.5])
     df_ = discretization_variables(df_, "number_of_referrals", [1,2,5])
     df_ = discretization_variables(df_, "tenure_in_months", [6,12,24,36,48,60])
-    df_["total_of_services_add"] = (df_[services_]=="Yes").sum(1)
+    services =  ["device_protection_plan","phone_service",
+                 "multiple_lines", "internet_service",
+                 "online_security", "online_backup",
+                 "premium_tech_support", "unlimited_data"]
+
+    df_["total_of_services_add"] = (df_[services]=="Yes").sum(1)
     return df_
 
 

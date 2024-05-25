@@ -100,12 +100,13 @@ def plot_shap_specific_var (shap_values, nbcols, cols_list, figsize_ = (12,6)) :
 
     """
     nbrows = (np.ceil(len(cols_list)/nbcols)).astype(int)
-    fig, ax1 = plt.subplots(nbcols, nbrows ,figsize=(figsize_))
+    fig, ax1 = plt.subplots( nbrows , nbcols,figsize=(figsize_))
     (i,j) = (0,0)
     for var in cols_list :
-        if j == 3:
+        if j == nbcols:
             j = 0
             i += 1
+            
         # Créez la figure et les axes à l'avance
         if var == "monthly_charge" :
             bins = None
@@ -116,7 +117,7 @@ def plot_shap_specific_var (shap_values, nbcols, cols_list, figsize_ = (12,6)) :
         # # Modification des étiquettes des axes
         ax1[i,j].set_xlabel(cols_list[var]["legend"], fontsize = 9)
         ax1[i,j].set_ylabel('Valeur SHAP', fontsize = 9)
-        if bin is not None :
+        if bins is not None :
             custom_labels = bins
             ax1[i,j].set_xticks(range(len(custom_labels)))
             ax1[i,j].set_xticklabels(custom_labels)
