@@ -25,14 +25,7 @@ def import_yaml_config():
     if os.path.exists(CONFIG_PATH):
         with open(CONFIG_PATH, "r", encoding="utf-8") as stream:
             config = yaml.safe_load(stream)
-            
-            # TRAIN_ML = config.get("train", "df_train.csv")
-            # TEST_ML = config.get("test", "df_test.csv")
-            # EVAL_OUTPUT = config.get("eval", "df_eval.csv")
-            # EVAL_ML = config.get("eval_output", "eval_df_telco_churn_status_code.csv")
-            # # TEST_FRACTION = config.get("test_fraction", .1)
-            # SEED = config.get("seed", 42)
-    return config #TRAIN_ML, TEST_ML, EVAL_ML, EVAL_OUTPUT, SEED
+    return config
  
 
 def create_dir(path, dirname) :
@@ -141,18 +134,14 @@ def read_merge_date (path_raw_data_, path_inter_data_, filename_) :
             df = pd.read_csv(path_raw_data_+file, sep=',',
                                keep_default_na=False,na_values=['NaN'])
             print(f"    --> contient {df.shape[0]} lignes et {df.shape[1]} variables.")
-            if found is True  :
-                merge_on_key = df_2.columns.intersection(df.columns)
-                try :
-                    df = pd.merge(df_2, df, how='inner', on= merge_on_key[0],
-                                  validate='one_to_one', sort=False)
-                except MergeError :
-                    # Le fait de faire un merge outer vient aggreger
-                    # tous les id des clients,
-                    # s'il y a des doublons au niveau de l'ID alors validate signalera une erreur
-                    has_dup = True
-                    break
-            df_2 = df.copy()
+            if (df["customer_id"].nunique() < df.shape[0]) :  
+                has_dup = True
+                break
+            if found == True :
+                if has_dup == False  :
+                    merge_on_key = df_.columns.intersection(df.columns)
+                    df = pd.merge(df_, df, how='inner', on= merge_on_key[0],  validate='one_to_one', sort=False)
+            df_ = df.copy()
             found = True
     if has_dup == False :
         print(f"Le df issu du merging contient {df.shape[0]} lignes et {df.shape[1]} variables.")
