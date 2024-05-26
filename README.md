@@ -66,9 +66,7 @@ Les librairies utilisées sont dispo dans `requirements.txt`
     │   ├── lift_curve.py
     │   └── model_calibration.py
     │   └── modelisation.py
-    │
-    └── visualization  <- Scripts to create exploratory and results oriented visualizations
-        └── visualize.py
+
 ```
 
 
