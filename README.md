@@ -73,27 +73,5 @@ Les librairies utilisées sont dispo dans `requirements.txt`
         └── visualize.py
 ```
 
---------
-=======
-└── main                <- Source code for use in this project.
-    │
-    ├── __init__.py    <- Makes scoring_project a Python module
-    │
-    ├── data           <- Scripts to generate data and preprocess
-    │   └── data_preprocessing.py
-    │   └── importation_data.py
-    │   └── plot_data_analyses.py
-    │
-    ├── explicatibilite       <- Scripts for features importance in predictions
-    │   └── interpretability.py
-    │
-    ├── model           <- Scripts to setup, run and evaluation model
-    │   └── lift_curve.py
-    │   └── model_calibration.py
-    │   └── modelisation.py
-```
 
-
-    
->>>>>>> 2af2081a3d039e23fd42cbe2834c22e4a43ee446
 
