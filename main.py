@@ -25,7 +25,7 @@ from shap import TreeExplainer
 
 from src.data.importation_data import (
     create_dir_tree,
-    move_csv, move_var_json, read_merge_date,
+    move_csv, move_var_json, read_merge_data,
     import_yaml_config
 )
 
@@ -91,9 +91,9 @@ if __name__ == "__main__":
     move_var_json (PATH_DATA_DIR)
 
     # Merging des 3 fichiers csv contenu dans le dossier  ./data/raw/train/
-    df = read_merge_date(PATH_RAW_DIR + "/" + TRAIN_FOLDER + "/",
+    df = read_merge_data(PATH_RAW_DIR + "/" + TRAIN_FOLDER + "/",
                          PATH_INTER_DIR, INTERM_FILE)
-    df_eval = read_merge_date(PATH_RAW_DIR + "/" + EVAL_FOLDER + "/",
+    df_eval = read_merge_data(PATH_RAW_DIR + "/" + EVAL_FOLDER + "/",
                               PATH_INTER_DIR, INTERM_FILE)
 
     # Séparation du df d'entraînement en df_train et df_test

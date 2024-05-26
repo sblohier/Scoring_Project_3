@@ -108,7 +108,7 @@ def move_var_json (path_datadir_) :
 
 
 
-def read_merge_date (path_raw_data_, path_inter_data_, filename_) :
+def read_merge_data (path_raw_data_, path_inter_data_, filename_) :
     """ Récupère le path du dossier contenant les csv,
         Pour chaque fichier :
          * Création d'un dataframe
