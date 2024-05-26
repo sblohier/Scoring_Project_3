@@ -34,11 +34,8 @@ Les librairies utilisées sont dispo dans `requirements.txt`
 ├── data
 │   ├── intermediate       <- Data after merging of 3 csv
 │   ├── ML_input           <- Data after feature_engineering & discrétisation
-│   ├── output             <- Evaluation of database "evl"
+│   ├── output             <- Evaluation of database "eval"
 │   └── raw            <- ( 2 * 3 csv)
-│
-├── docs               <- A default mkdocs project; see mkdocs.org for details
-│
 ├── models             <- unused
 │
 ├── notebooks          <- Jupyter notebooks.
@@ -51,23 +48,24 @@ Les librairies utilisées sont dispo dans `requirements.txt`
 ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
 │                         generated with `pip freeze > requirements.txt`
 │
-<<<<<<< HEAD
-├── setup.cfg          <- Configuration file for flake8
 │
-└── scoring_project                <- Source code for use in this project.
+└── src                <- Source code for use in this project.
     │
     ├── __init__.py    <- Makes scoring_project a Python module
     │
-    ├── data           <- Scripts to download or generate data
-    │   └── make_dataset.py
-    │
-    ├── features       <- Scripts to turn raw data into features for modeling
-    │   └── build_features.py
-    │
+    ├── data           <- Scripts to download or generate data + data analysis & preselection
+    │   └── data_preprocessing.py
+    │   └── importation_data.py
+    │   └── plot_data_analyses.py
+    |
+    ├── explicatibilite           <-> scripts for interpretation of model output
+    │   └── interpretability.py
+    |
     ├── models         <- Scripts to train models and then use trained models to make
     │   │                 predictions
-    │   ├── predict_model.py
-    │   └── train_model.py
+    │   ├── lift_curve.py
+    │   └── model_calibration.py
+    │   └── modelisation.py
     │
     └── visualization  <- Scripts to create exploratory and results oriented visualizations
         └── visualize.py
