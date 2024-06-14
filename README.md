@@ -39,14 +39,9 @@ Les librairies utilisées sont dispo dans `requirements.txt`
 │
 ├── docs               <- A default mkdocs project; see mkdocs.org for details
 │
-├── models             <- unused
-│
 ├── notebooks          <- Jupyter notebooks.
 |                         Variables_Preselection.ipynb
 |                         Modélisation_Evaluation.ipynb
-│
-├── reports            <- unused
-│   └── figures        <- unused
 │
 ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
 │                         generated with `pip freeze > requirements.txt`
