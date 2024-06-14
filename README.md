@@ -31,64 +31,46 @@ Les librairies utilisées sont dispo dans `requirements.txt`
 
 
 ```bash
+├── configuration
+│   └── config.yaml           
+│
 ├── data
 │   ├── intermediate       <- Data after merging of 3 csv
 │   ├── ML_input           <- Data after feature_engineering & discrétisation
-│   ├── output             <- Evaluation of database "evl"
+│   ├── output             <- Evaluation of database "eval"
 │   └── raw            <- ( 2 * 3 csv)
 │
-├── docs               <- A default mkdocs project; see mkdocs.org for details
+├── main.py
 │
 ├── notebooks          <- Jupyter notebooks.
 |                         Variables_Preselection.ipynb
 |                         Modélisation_Evaluation.ipynb
 │
+├── reports               <- presentation.pdf
+│
 ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
 │                         generated with `pip freeze > requirements.txt`
 │
-<<<<<<< HEAD
-├── setup.cfg          <- Configuration file for flake8
 │
-└── scoring_project                <- Source code for use in this project.
+└── src                <- Source code for use in this project.
     │
     ├── __init__.py    <- Makes scoring_project a Python module
     │
-    ├── data           <- Scripts to download or generate data
-    │   └── make_dataset.py
-    │
-    ├── features       <- Scripts to turn raw data into features for modeling
-    │   └── build_features.py
-    │
-    ├── models         <- Scripts to train models and then use trained models to make
-    │   │                 predictions
-    │   ├── predict_model.py
-    │   └── train_model.py
-    │
-    └── visualization  <- Scripts to create exploratory and results oriented visualizations
-        └── visualize.py
-```
-
---------
-=======
-└── main                <- Source code for use in this project.
-    │
-    ├── __init__.py    <- Makes scoring_project a Python module
-    │
-    ├── data           <- Scripts to generate data and preprocess
+    ├── data           <- Scripts to download or generate data + data analysis & preselection
     │   └── data_preprocessing.py
     │   └── importation_data.py
     │   └── plot_data_analyses.py
-    │
-    ├── explicatibilite       <- Scripts for features importance in predictions
+    |
+    ├── explicatibilite           <-> scripts for interpretation of model output
     │   └── interpretability.py
-    │
-    ├── model           <- Scripts to setup, run and evaluation model
-    │   └── lift_curve.py
+    |
+    ├── models         <- Scripts to train models and then use trained models to make
+    │   │                 predictions
+    │   ├── lift_curve.py
     │   └── model_calibration.py
     │   └── modelisation.py
+
 ```
 
 
-    
->>>>>>> 2af2081a3d039e23fd42cbe2834c22e4a43ee446
 
